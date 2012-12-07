@@ -1,0 +1,40 @@
+{
+  "name": "rvm_passenger",
+  "description": "Installs and configures Passenger under RVM with Apache or nginx",
+  "long_description": "# <a name=\"title\"></a> chef-rvm_passenger [![Build Status](https://secure.travis-ci.org/fnichol/chef-rvm_passenger.png?branch=master)](http://travis-ci.org/fnichol/chef-rvm_passenger)\n\n## <a name=\"description\"></a> Description\n\nInstalls passenger gem via RVM and configures Apache or Nginx.\n\n## <a name=\"usage\"></a> Usage\n\nComming soon...\n\n## <a name=\"requirements\"></a> Requirements\n\n### <a name=\"requirements-chef\"></a> Chef\n\nTested on 0.9.18, 0.10.2 and 0.10.4 but newer and older version should work\njust fine. File an [issue][issues] if this isn't the case.\n\n### <a name=\"requirements-platform\"></a> Platform\n\nThe following platforms have been tested with this cookbook, meaning that\nthe recipes run on these platforms without error:\n\n* ubuntu (10.04/10.10/11.04)\n* debian (6.0)\n* suse\n* centos (5/6)\n* redhat (5/6)\n\nPlease [report][issues] any additional platforms so they can be added.\n\n### <a name=\"requirements-cookbooks\"></a> Cookbooks\n\nThis cookbook depends on the following external cookbooks:\n\n* [rvm][rvm_cb]\n* [nginx][nginx_cb] (Opscode)\n* [apache2][apache2_cb] (Opscode)\n\n## <a name=\"installation\"></a> Installation\n\nDepending on the situation and use case there are several ways to install\nthis cookbook. All the methods listed below assume a tagged version release\nis the target, but omit the tags to get the head of development. A valid\nChef repository structure like the [Opscode repo][chef_repo] is also assumed.\n\n### <a name=\"installation-librarian\"></a> Using Librarian\n\n[Librarian-Chef][librarian] is a bundler for your Chef cookbooks.\nInclude a reference to the cookbook in a [Cheffile][cheffile] and run\n`librarian-chef install`. To install Librarian-Chef:\n\n    gem install librarian\n    cd chef-repo\n    librarian-chef init\n\nTo reference the Git version:\n\n    cat >> Cheffile <<END_OF_CHEFFILE\n    cookbook 'rvm_passenger',\n      :git => 'https://github.com/fnichol/chef-rvm_passenger', :ref => 'v0.8.2'\n    END_OF_CHEFFILE\n    librarian-chef install\n\n### <a name=\"installation-kgc\"></a> Using knife-github-cookbooks\n\nThe [knife-github-cookbooks][kgc] gem is a plugin for *knife* that supports\ninstalling cookbooks directly from a GitHub repository. To install with the\nplugin:\n\n    gem install knife-github-cookbooks\n    cd chef-repo\n    knife cookbook github install fnichol/chef-rvm_passenger/v0.8.2\n\n### <a name=\"installation-tarball\"></a> As a Tarball\n\nIf the cookbook needs to downloaded temporarily just to be uploaded to a Chef\nServer or Opscode Hosted Chef, then a tarball installation might fit the bill:\n\n    cd chef-repo/cookbooks\n    curl -Ls https://github.com/fnichol/chef-rvm_passenger/tarball/v0.8.2 | tar xfz - && \\\n      mv fnichol-chef-rvm_passenger-* rvm_passenger\n\n### <a name=\"installation-gitsubmodule\"></a> As a Git Submodule\n\nA dated practice (which is discouraged) is to add cookbooks as Git\nsubmodules. This is accomplishes like so:\n\n    cd chef-repo\n    git submodule add git://github.com/fnichol/chef-rvm_passenger.git cookbooks/rvm_passenger\n    git submodule init && git submodule update\n\n**Note:** the head of development will be linked here, not a tagged release.\n\n### <a name=\"installation-platform\"></a> From the Opscode Community Platform\n\nThis cookbook is not currently available on the site as it relies on a cookbook\n([rvm][rvm_cb]) not available on the community site.\n\n## <a name=\"recipes\"></a> Recipes\n\n### <a name=\"recipes-default\"></a> default\n\nInstalls dependencies and contains helpers for other recipes.\n\n### <a name=\"recipes-apache2\"></a> apache2\n\nInstalls passenger as an apache2 module. Requires the `apache2` recipe.\n\n### <a name=\"recipes-nginx\"></a> nginx\n\nInstalls passenger as an nginx module. Requires the `nginx::source` recipe.\n\n## <a name=\"attributes\"></a> Attributes\n\n### <a name=\"attributes-version\"></a> version\n\nThe version of passenger to deploy. This will be in a format used by the gem\ncommand. For example:\n\n    node['rvm_passenger']['version'] = \"3.0.8\"\n\nDefault is the most current version which is queried dynamically from RubyGems.\n\n### <a name=\"attributes-rvm-ruby\"></a> rvm_ruby\n\nThe RVM ruby (and optional gemset) under which to install the passenger gem.\nFor example:\n\n    node['rvm_passenger']['rvm_ruby'] = \"ruby-1.8.7-p352@passenger\"\n\nDefault is the default RVM Ruby in a gemset called \"passenger\", i.e.\n`\"#{node['rvm']['default_rvm']}@passenger\"`.\n\n### <a name=\"attributes-root-path\"></a> root_path\n\nOptionally override the full path to the root of the installed passenger gem.\n\n### <a name=\"attributes-module-path\"></a> module_path\n\nOptionallly override the full path to the Apache2 module.\n\n## <a name=\"lwrps\"></a> Resources and Providers\n\nThere are **no** resources or providers defined.\n\n## <a name=\"development\"></a> Development\n\n* Source hosted at [GitHub][repo]\n* Report issues/Questions/Feature requests on [GitHub Issues][issues]\n\nPull requests are very welcome! Make sure your patches are well tested.\nIdeally create a topic branch for every separate change you make.\n\n## <a name=\"license\"></a> License and Author\n\nAuthor:: Fletcher Nichol (<fnichol@nichol.ca>)\n\nContributors:: https://github.com/fnichol/chef-rvm_passenger/contributors\n\nCopyright:: 2010, 2011, Fletcher Nichol\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n\n[apache2_cb]:   http://community.opscode.com/cookbooks/apache2\n[chef_repo]:    https://github.com/opscode/chef-repo\n[kgc]:          https://github.com/websterclay/knife-github-cookbooks#readme\n[librarian]:    https://github.com/applicationsonline/librarian#readme\n[nginx_cb]:     http://community.opscode.com/cookbooks/nginx\n[rvm_cb]:       https://github.com/fnichol/chef-rvm\n\n[repo]:         https://github.com/fnichol/chef-rvm_passenger\n[issues]:       https://github.com/fnichol/chef-rvm_passenger/issues\n",
+  "maintainer": "Fletcher Nichol",
+  "maintainer_email": "fnichol@nichol.ca",
+  "license": "Apache 2.0",
+  "platforms": {
+    "ubuntu": ">= 0.0.0",
+    "debian": ">= 0.0.0",
+    "suse": ">= 0.0.0",
+    "centos": ">= 0.0.0",
+    "redhat": ">= 0.0.0"
+  },
+  "dependencies": {
+    "rvm": ">= 0.8.0",
+    "nginx": "~> 1.0.0",
+    "apache2": "~> 1.1.8"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+    "rvm_passenger": "Installs Passenger gem with RVM",
+    "rvm_passenger::apache2": "Enables Apache module configuration for passenger under RVM",
+    "rvm_passenger::nginx": "Installs Passenger gem w/ RVM, and recompiles support into Nginx"
+  },
+  "version": "0.8.2"
+}

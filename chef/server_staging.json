@@ -1,0 +1,1 @@
+{ "run_list": [ "role[mysql]","role[rvm]","role[passenger]" ] }

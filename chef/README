@@ -1,0 +1,3 @@
+The JSON files contain specialized run-lists for each server.
+
+solo.rb holds configuration information for Chef.
