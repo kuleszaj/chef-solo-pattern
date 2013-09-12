@@ -1,3 +1,6 @@
 Chef configuration information in /chef.
 
 Capistrano configuration information in /config.
+
+This pattern is somewhat out of date. If you're still interested, please see a newer pattern that we've developed at:
+https://github.com/kuleszaj/chef-solo-with-vagrant
